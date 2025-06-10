@@ -49,6 +49,8 @@ interface UpdateUserResponse {
   user: User;
 }
 
+const apiUrl = import.meta.env.VITE_API_URL;
+console.log("dome")
 // Initial state
 const initialState: AuthState = {
   token: localStorage.getItem("token") || null,
@@ -69,7 +71,7 @@ export const registerUser = createAsyncThunk<
 >("auth/registerUser", async (body, { rejectWithValue }) => {
   try {
     const res = await axios.post<RegisterResponse>(
-      `${VITE_API_URL}/api/auth/register`,
+      `${apiUrl}/api/auth/register`,
       body,
       {
         headers: {
@@ -93,7 +95,7 @@ export const loginUser = createAsyncThunk<
 >("auth/loginUser", async (credentials, { rejectWithValue }) => {
   try {
     const res = await axios.post<LoginResponse>(
-      `${VITE_API_URL}/api/auth/login`,
+      `${apiUrl}/api/auth/login`,
       credentials,
       {
         headers: {
@@ -121,7 +123,7 @@ export const updateUser = createAsyncThunk<
     const token = state.auth.token;
 
     const res = await axios.put<UpdateUserResponse>(
-      `${VITE_API_URL}/api/users/me`,
+      `${apiUrl}/api/users/me`,
       userData,
       {
         headers: {
@@ -148,7 +150,7 @@ export const getUsers = createAsyncThunk<User[], void, { rejectValue: string }>(
         success: boolean;
         count: number;
         data: User[];
-      }>(`${VITE_API_URL}/api/users`, {
+      }>(`${apiUrl}/api/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -173,7 +175,7 @@ export const getUserById = createAsyncThunk<
     const token = state.auth.token;
 
     const res = await axios.get<{ success: boolean; data: User }>(
-      `${VITE_API_URL}/api/users/${userId}`,
+      `${apiUrl}/api/users/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

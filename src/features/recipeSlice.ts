@@ -47,14 +47,14 @@ const initialState: RecipeState = {
   loading: false,
   error: null,
 };
-
+const apiUrl = import.meta.env.VITE_API_URL;
 // POST - Create Recipe
 export const createRecipe = createAsyncThunk(
   "recipes/create",
   async (newRecipe: Recipe, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        `${VITE_API_URL}/api/createrecipes`,
+        `${apiUrl}/api/createrecipes`,
         newRecipe
       );
       return res.data;
@@ -68,7 +68,7 @@ export const getAllRecipes = createAsyncThunk(
   "recipes/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${VITE_API_URL}/api/recipes`);
+      const res = await axios.get(`${apiUrl}/api/recipes`);
       return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Failed to fetch recipes");
@@ -82,7 +82,7 @@ export const getRecipeById = createAsyncThunk<
   { rejectValue: string }
 >("recipes/getRecipeById", async (id, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`${VITE_API_URL}/api/recipes/${id}`);
+    const res = await axios.get(`${apiUrl}/api/recipes/${id}`);
     return res.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data || "Failed to fetch recipe");
