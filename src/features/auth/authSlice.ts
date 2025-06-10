@@ -69,7 +69,7 @@ export const registerUser = createAsyncThunk<
 >("auth/registerUser", async (body, { rejectWithValue }) => {
   try {
     const res = await axios.post<RegisterResponse>(
-      "http://localhost:5000/api/auth/register",
+      `${VITE_API_URL}/api/auth/register`,
       body,
       {
         headers: {
@@ -93,7 +93,7 @@ export const loginUser = createAsyncThunk<
 >("auth/loginUser", async (credentials, { rejectWithValue }) => {
   try {
     const res = await axios.post<LoginResponse>(
-      "http://localhost:5000/api/auth/login",
+      `${VITE_API_URL}/api/auth/login`,
       credentials,
       {
         headers: {
@@ -121,7 +121,7 @@ export const updateUser = createAsyncThunk<
     const token = state.auth.token;
 
     const res = await axios.put<UpdateUserResponse>(
-      `http://localhost:5000/api/users/me`,
+      `${VITE_API_URL}/api/users/me`,
       userData,
       {
         headers: {
@@ -148,7 +148,7 @@ export const getUsers = createAsyncThunk<User[], void, { rejectValue: string }>(
         success: boolean;
         count: number;
         data: User[];
-      }>("http://localhost:5000/api/users", {
+      }>(`${VITE_API_URL}/api/users`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -173,7 +173,7 @@ export const getUserById = createAsyncThunk<
     const token = state.auth.token;
 
     const res = await axios.get<{ success: boolean; data: User }>(
-      `http://localhost:5000/api/users/${userId}`,
+      `${VITE_API_URL}/api/users/${userId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
