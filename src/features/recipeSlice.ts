@@ -54,7 +54,7 @@ export const createRecipe = createAsyncThunk(
   async (newRecipe: Recipe, { rejectWithValue }) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/createrecipes",
+        `${VITE_API_URL}/api/createrecipes`,
         newRecipe
       );
       return res.data;
@@ -68,7 +68,7 @@ export const getAllRecipes = createAsyncThunk(
   "recipes/getAll",
   async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get("http://localhost:5000/api/recipes");
+      const res = await axios.get(`${VITE_API_URL}/api/recipes`);
       return res.data;
     } catch (err: any) {
       return rejectWithValue(err.response?.data || "Failed to fetch recipes");
@@ -82,7 +82,7 @@ export const getRecipeById = createAsyncThunk<
   { rejectValue: string }
 >("recipes/getRecipeById", async (id, { rejectWithValue }) => {
   try {
-    const res = await axios.get(`http://localhost:5000/api/recipes/${id}`);
+    const res = await axios.get(`${VITE_API_URL}/api/recipes/${id}`);
     return res.data;
   } catch (err: any) {
     return rejectWithValue(err.response?.data || "Failed to fetch recipe");
